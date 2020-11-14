@@ -1,14 +1,14 @@
 from fastapi import APIRouter, HTTPException
 
-from app.models.items import Item, ItemList
-from app.models.message import Message
+from app.models.items import Item
+from app.models.message import Message, Response
 
 item_router = APIRouter()
 
 ITEMS = {i: Item(id=i, name=f"Item {i}") for i in range(1, 10)}
 
 
-@item_router.get("/", response_model=ItemList)
+@item_router.get("/", response_model=Response[Item])
 def get_all_items():
     return {"count": len(ITEMS), "data": list(ITEMS.values())}
 
